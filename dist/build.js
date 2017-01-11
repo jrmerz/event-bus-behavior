@@ -24,6 +24,24 @@ var EventBusBehavior = function () {
     }
   }
 
+  function ebChain(events, done) {
+    triggerEbChainEvent(0, events, [], this._eventBus, done);
+  }
+
+  function triggerEbChainEvent(index, events, results, eventBus, done) {
+    var e = events[index];
+    if (!e.payload) e.payload = {};
+
+    e.payload.handler = function (result) {
+      results.push(result);
+      index++;
+
+      if (index === events.length) done(results);else triggerEbChainEvent(index, events, results, eventBus, done);
+    };
+
+    eventBus.emit(e.event, e.payload);
+  }
+
   return {
     // have we initialized the handlers?
     _eb_handlersSet: false,
@@ -45,7 +63,9 @@ var EventBusBehavior = function () {
         if (!this[this.ebBind[key]]) continue;
         this._eventBus.removeListener(key, this[this.ebBind[key]]);
       }
-    }
+    },
+
+    ebChain: ebChain
   };
 }();
 
