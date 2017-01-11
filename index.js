@@ -12,18 +12,18 @@ var EventBusBehavior = (function(){
       
       if( !this._eventBus || !this.ebBind ) return;
       for( var key in this.ebBind ) {
-        if( !this[ebBind[key]] ) {
-          console.warn(`${this.nodeName} could not bind event ${key} to ${ebBind[key]}`);
+        if( !this[this.ebBind[key]] ) {
+          console.warn(`${this.nodeName} could not bind event ${key} to ${this.ebBind[key]}`);
           continue;
         }
-        this._eventBus.on(key, this[ebBind[key]].bind(this));
+        this._eventBus.on(key, this[this.ebBind[key]].bind(this));
       }
     },
     detached : function() {
       if( !this._eventBus || !this.ebBind ) return;
       for( var key in this.ebBind ) {
-        if( !this[ebBind[key]] ) continue;
-        this._eventBus.removeListener(key, this[ebBind[key]]);
+        if( !this[this.ebBind[key]] ) continue;
+        this._eventBus.removeListener(key, this[this.ebBind[key]]);
       }
     }
   }
