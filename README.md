@@ -118,6 +118,9 @@ Polymer({
         // array of all prior event responses.  It will set the key
         // to the payload with the returned value of the function.
         {event: 'get-data-with-input', stream : {input: (results) => results[1]}},
+        
+        // you and also short hand {event: 'get-data'} with no payload as:
+        // 'get-data',
       ],
       function(results) {
         callback.apply(this, results);

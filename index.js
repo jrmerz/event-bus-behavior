@@ -28,6 +28,11 @@ var EventBusBehavior = (function(){
 
   function triggerEbChainEvent(index, events, results, eventBus, done) {
     var e = events[index];
+
+    if( typeof e === 'string' ) {
+      e = {event: e};
+    }
+
     if( !e.payload ) e.payload = {};
 
     if( e.stream ) {

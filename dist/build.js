@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var EventBusBehavior = function () {
   function getEventBus(ele) {
@@ -17,7 +17,7 @@ var EventBusBehavior = function () {
     if (!this._eventBus || !this.ebBind) return;
     for (var key in this.ebBind) {
       if (!this[this.ebBind[key]]) {
-        console.warn(this.nodeName + " could not bind event " + key + " to " + this.ebBind[key]);
+        console.warn(this.nodeName + ' could not bind event ' + key + ' to ' + this.ebBind[key]);
         continue;
       }
       this._eventBus.on(key, this[this.ebBind[key]].bind(this));
@@ -30,6 +30,11 @@ var EventBusBehavior = function () {
 
   function triggerEbChainEvent(index, events, results, eventBus, done) {
     var e = events[index];
+
+    if (typeof e === 'string') {
+      e = { event: e };
+    }
+
     if (!e.payload) e.payload = {};
 
     if (e.stream) {
