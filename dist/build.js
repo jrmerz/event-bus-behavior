@@ -32,6 +32,12 @@ var EventBusBehavior = function () {
     var e = events[index];
     if (!e.payload) e.payload = {};
 
+    if (e.stream) {
+      for (var key in e.stream) {
+        e.payload[key] = e.stream[key](results);
+      }
+    }
+
     e.payload.handler = function (result) {
       results.push(result);
       index++;

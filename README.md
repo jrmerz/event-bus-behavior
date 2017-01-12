@@ -107,10 +107,17 @@ Polymer({
 
   // call via event
   getStuff : function(callback) {
-    this.cbChain(
+    this.sbChain(
       [
         {event: 'get-data'},
+        // payload is the event payload
         {event: 'get-data-with-input', payload : {input: foo}},
+        // sometimes you may want to stream the result of one event
+        // into the following function call.  For this you can use
+        // the 'stream' property.  It will be passed the 'results'
+        // array of all prior event responses.  It will set the key
+        // to the payload with the returned value of the function.
+        {event: 'get-data-with-input', stream : {input: (results) => results[1]}},
       ],
       function(results) {
         callback.apply(this, results);
