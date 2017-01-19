@@ -1,7 +1,7 @@
 'use strict';
 
 var EventBusBehavior = function () {
-  function getEventBus(ele) {
+  function _getEventBus(ele) {
     if (ele.EVENT_BUS && window[ele.EVENT_BUS]) {
       return window[ele.EVENT_BUS];
     }
@@ -11,7 +11,7 @@ var EventBusBehavior = function () {
   function init() {
     if (this._eb_handlersSet) return;
 
-    this._eventBus = getEventBus(this);
+    this._eventBus = _getEventBus(this);
     this._eb_handlersSet = true;
 
     if (!this._eventBus || !this.ebBind) return;
@@ -74,6 +74,17 @@ var EventBusBehavior = function () {
         if (!this[this.ebBind[key]]) continue;
         this._eventBus.removeListener(key, this[this.ebBind[key]]);
       }
+    },
+
+    getEventBus: function getEventBus() {
+      if (!this._eventBus) {
+        this._eventBus = _getEventBus(this);
+      }
+      return this._eventBus;
+    },
+
+    ebEmit: function ebEmit(event, payload) {
+      this.getEventBus().emit(event, payload);
     },
 
     ebChain: ebChain

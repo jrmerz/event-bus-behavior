@@ -75,6 +75,17 @@ var EventBusBehavior = (function(){
       }
     },
 
+    getEventBus : function() {
+      if( !this._eventBus ) {
+        this._eventBus = getEventBus(this);
+      }
+      return this._eventBus; 
+    },
+
+    ebEmit : function(event, payload) {
+      this.getEventBus().emit(event, payload);
+    },
+
     ebChain : ebChain
   }
 
