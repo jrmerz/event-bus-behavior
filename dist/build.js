@@ -47,7 +47,11 @@ var EventBusBehavior = function () {
       results.push(result);
       index++;
 
-      if (index === events.length) done(results);else triggerEbChainEvent(index, events, results, eventBus, done);
+      if (index === events.length) {
+        if (done) done(results);
+      } else {
+        triggerEbChainEvent(index, events, results, eventBus, done);
+      }
     };
 
     eventBus.emit(e.event, e.payload);
